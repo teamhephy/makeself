@@ -4,6 +4,8 @@ cat << EOF  > "$archname"
 
 umask 077
 
+binary="$BINARY"
+
 CRCsum="$CRCsum"
 MD5="$MD5sum"
 TMPROOT=\${TMPDIR:=/tmp}
@@ -465,7 +467,7 @@ for s in \$filesizes
 do
     if MS_dd_Progress "\$0" \$offset \$s | eval "$GUNZIP_CMD" | ( cd "\$tmpdir"; UnTAR xp ) 1>/dev/null; then
 		if test x"\$ownership" = xy; then
-			(PATH=/usr/xpg4/bin:\$PATH; cd "\$tmpdir"; chown -R \`id -u\` .;  chgrp -R \`id -g\` .)
+			(PATH=/usr/xpg4/bin:\$PATH; cd "\$tmpdir"; chown \`id -u\` ./\$binary;  chgrp \`id -g\` ./\$binary)
 		fi
     else
 		echo >&2
