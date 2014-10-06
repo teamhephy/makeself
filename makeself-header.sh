@@ -206,10 +206,12 @@ MS_Check()
 
 UnTAR()
 {
+    if test -d "\$binary"; then
+		echo Extraction failed: a directory named \"\$binary\" exists here. > /dev/tty; exit 1;
+    fi
     if test x"\$quiet" = xn; then
 		tar \$1vf - 2>&1 || { echo Extraction failed. > /dev/tty; kill -15 \$$; }
     else
-
 		tar \$1f - 2>&1 || { echo Extraction failed. > /dev/tty; kill -15 \$$; }
     fi
 }
